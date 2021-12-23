@@ -1,0 +1,20 @@
+<p id="used">Used: 0 MB</p>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script>
+    function humanbytes(bytes) {
+        var sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
+        if (bytes == 0) return '0 B';
+        var i = parseInt(Math.floor(Math.log(bytes) / Math.log(1024)));
+        return Math.round(bytes / Math.pow(1024, i), 2) + ' ' + sizes[i];
+    }
+    var wasted = 0;
+    setInterval(function() {
+        $.ajax({
+            url: "raw.txt?" + Math.random(),
+            success: function(data) {
+                wasted += data.length;
+                $("#used").html(`Used: ${humanbytes(wasted)}`);
+            }
+        });
+    }, 200);
+</script>
